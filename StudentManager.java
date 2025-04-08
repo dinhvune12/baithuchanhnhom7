@@ -37,13 +37,7 @@ public class StudentManager {
         studentTable = new JTable(tableModel);
 
         
-        // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchStudent();
-            }
-        });
+    
 
         // Cấu hình giao diện
         JPanel panel = new JPanel();
