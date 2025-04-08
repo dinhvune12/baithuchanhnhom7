@@ -29,8 +29,9 @@ public class StudentManager {
 
         // Tạo các nút chức năng
         JButton addButton = new JButton("Thêm Sinh Viên");
-
         JButton searchButton = new JButton("Tìm kiếm");
+        JButton updateButton = new JButton("Sửa");
+ 
 
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
@@ -45,9 +46,6 @@ public class StudentManager {
             }
         });
 
-       
-
-        
         // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -55,6 +53,15 @@ public class StudentManager {
                 searchStudent();
             }
         });
+
+        // Lắng nghe sự kiện khi nhấn nút "Sửa"
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateStudent();
+            }
+        });
+
 
         // Cấu hình giao diện
         JPanel panel = new JPanel();
@@ -65,11 +72,13 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
-        panel.add(addButton);
 
+        panel.add(addButton);
+     
         panel.add(searchLabel);
         panel.add(searchField);
         panel.add(searchButton);
+        panel.add(updateButton);
 
         // Thêm bảng vào cửa sổ
         JScrollPane scrollPane = new JScrollPane(studentTable);
@@ -83,6 +92,7 @@ public class StudentManager {
         frame.setVisible(true);
     }
 
+    // Thêm sinh viên mới
     private void addStudent() {
         String name = nameField.getText();
         String ageStr = ageField.getText();
@@ -101,7 +111,8 @@ public class StudentManager {
             // Cập nhật bảng
             Object[] row = {student.getName(), student.getAge(), student.getClassName()};
             tableModel.addRow(row);
-// Xóa dữ liệu trong các trường nhập
+
+            // Xóa dữ liệu trong các trường nhập
             nameField.setText("");
             ageField.setText("");
             classField.setText("");
@@ -111,12 +122,7 @@ public class StudentManager {
         }
     }
 
-    
-
-   
-
-
-   
+    // Tìm kiếm sinh viên
     private void searchStudent() {
         String searchText = searchField.getText().toLowerCase();
         if (searchText.isEmpty()) {
@@ -124,13 +130,61 @@ public class StudentManager {
             return;
         }
 
+        boolean found = false;
         for (int i = 0; i < studentList.size(); i++) {
             Student student = studentList.get(i);
             if (student.getName().toLowerCase().contains(searchText) || 
                 student.getClassName().toLowerCase().contains(searchText)) {
-                    studentTable.setRowSelectionInterval(i, i); // Chọn dòng đầu tiên tìm được
+                studentTable.setRowSelectionInterval(i, i); // Chọn dòng đầu tiên tìm được
+                found = true;
                 break;
             }
+        }
+        
+        if (!found) {
+            JOptionPane.showMessageDialog(frame, "Không tìm thấy sinh viên phù hợp.");
+        }
+    }
+
+
+
+    // Sửa thông tin sinh viên
+    private void updateStudent() {
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn sinh viên để sửa!");
+            return;
+        }
+
+        String name = nameField.getText();
+        String ageStr = ageField.getText();
+        String className = classField.getText();
+
+        if (name.isEmpty() || ageStr.isEmpty() || className.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        try {
+            int age = Integer.parseInt(ageStr);
+
+            // Cập nhật ArrayList
+            Student student = studentList.get(selectedRow);
+            student.setName(name);
+            student.setAge(age);
+            student.setClassName(className);
+
+            // Cập nhật bảng
+            tableModel.setValueAt(name, selectedRow, 0);
+            tableModel.setValueAt(age, selectedRow, 1);
+            tableModel.setValueAt(className, selectedRow, 2);
+
+            nameField.setText("");
+            ageField.setText("");
+            classField.setText("");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Tuổi phải là một số hợp lệ!");
         }
     }
 
