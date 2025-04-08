@@ -27,14 +27,19 @@ public class StudentManager {
         searchField = new JTextField(20);
 
         // Tạo các nút chức năng
+
  
         JButton updateButton = new JButton("Sửa");
  
+
+        JButton deleteButton = new JButton("Xoá");
+
 
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
+
 
       
 
@@ -48,6 +53,17 @@ public class StudentManager {
 
         
 
+        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
+      
+        // Lắng nghe sự kiện khi nhấn nút "Xoá"
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteStudent();
+            }
+        });
+
+
         // Cấu hình giao diện
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2, 10, 10));
@@ -57,8 +73,14 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
+
         panel.add(updateButton);
        
+
+
+        panel.add(deleteButton);
+
+
         // Thêm bảng vào cửa sổ
         JScrollPane scrollPane = new JScrollPane(studentTable);
 
@@ -71,7 +93,18 @@ public class StudentManager {
         frame.setVisible(true);
     }
 
-   
+    private void deleteStudent() {
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn sinh viên để xóa!");
+            return;
+        }
+
+        studentList.remove(selectedRow);
+        tableModel.removeRow(selectedRow);
+    }
+
+
 
     private void updateStudent() {
         int selectedRow = studentTable.getSelectedRow();
