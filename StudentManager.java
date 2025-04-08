@@ -35,7 +35,7 @@ public class StudentManager {
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
 
-        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
+     
       
         // Lắng nghe sự kiện khi nhấn nút "Xoá"
         deleteButton.addActionListener(new ActionListener() {
@@ -81,7 +81,6 @@ public class StudentManager {
         tableModel.removeRow(selectedRow);
     }
 
-
     public static void main(String[] args) {
         new StudentManager();
     }
@@ -101,8 +100,7 @@ class Student {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
+public void setName(String name) {
         this.name = name;
     }
 
@@ -122,5 +120,3 @@ class Student {
         this.className = className;
     }
 }
-
-
