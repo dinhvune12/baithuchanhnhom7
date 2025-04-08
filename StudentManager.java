@@ -1,8 +1,10 @@
-import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+//Author Dang Nhan
 public class StudentManager {
     private JFrame frame;
     private JTextField nameField, ageField, classField, searchField;
@@ -26,16 +28,22 @@ public class StudentManager {
 
         // Tạo các nút chức năng
 
-       
+        JButton deleteButton = new JButton("Xoá");
 
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
 
-     
+        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
       
-       
+        // Lắng nghe sự kiện khi nhấn nút "Xoá"
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteStudent();
+            }
+        });
 
         // Cấu hình giao diện
         JPanel panel = new JPanel();
@@ -47,7 +55,7 @@ public class StudentManager {
         panel.add(classLabel);
         panel.add(classField);
 
-        
+        panel.add(deleteButton);
 
         // Thêm bảng vào cửa sổ
         JScrollPane scrollPane = new JScrollPane(studentTable);
@@ -62,7 +70,17 @@ public class StudentManager {
     }
 
     
-   
+    private void deleteStudent() {
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn sinh viên để xóa!");
+            return;
+        }
+
+        studentList.remove(selectedRow);
+        tableModel.removeRow(selectedRow);
+    }
+
 
     public static void main(String[] args) {
         new StudentManager();
@@ -104,6 +122,5 @@ class Student {
         this.className = className;
     }
 }
-
 
 
