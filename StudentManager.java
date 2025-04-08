@@ -28,6 +28,7 @@ public class StudentManager {
         searchField = new JTextField(20);
 
         // Tạo các nút chức năng
+        JButton addButton = new JButton("Thêm Sinh Viên");
 
         JButton searchButton = new JButton("Tìm kiếm");
 
@@ -35,6 +36,16 @@ public class StudentManager {
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
+
+        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addStudent();
+            }
+        });
+
+       
 
         
         // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
@@ -54,6 +65,7 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
+        panel.add(addButton);
 
         panel.add(searchLabel);
         panel.add(searchField);
@@ -70,6 +82,39 @@ public class StudentManager {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
+    private void addStudent() {
+        String name = nameField.getText();
+        String ageStr = ageField.getText();
+        String className = classField.getText();
+
+        if (name.isEmpty() || ageStr.isEmpty() || className.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        try {
+            int age = Integer.parseInt(ageStr);
+            Student student = new Student(name, age, className);
+            studentList.add(student);
+
+            // Cập nhật bảng
+            Object[] row = {student.getName(), student.getAge(), student.getClassName()};
+            tableModel.addRow(row);
+// Xóa dữ liệu trong các trường nhập
+            nameField.setText("");
+            ageField.setText("");
+            classField.setText("");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Tuổi phải là một số hợp lệ!");
+        }
+    }
+
+    
+
+   
+
 
    
     private void searchStudent() {
