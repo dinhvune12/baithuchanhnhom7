@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
+//huy
 public class StudentManager {
     private JFrame frame;
     private JTextField nameField, ageField, classField, searchField;
@@ -93,7 +93,7 @@ public class StudentManager {
         new StudentManager();
     }
 }
-// cc tao ne
+
 class Student {
     private String name;
     private int age;
