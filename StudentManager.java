@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+// author Dang Nhan
 public class StudentManager {
     private JFrame frame;
     private JTextField nameField, ageField, classField, searchField;
@@ -119,4 +119,4 @@ public void setName(String name) {
     public void setClassName(String className) {
         this.className = className;
     }
-}
+}//done
