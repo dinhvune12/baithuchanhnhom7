@@ -4,13 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-//author khongminhkhoa
-public class StudentManager {
-    private JFrame frame;
-    private JTextField nameField, ageField, classField, searchField;
-    private JTable studentTable;
-    private ArrayList<Student> studentList;
-    private DefaultTableModel tableModel;
 
     public StudentManager() {
         studentList = new ArrayList<>();
@@ -27,7 +20,6 @@ public class StudentManager {
         searchField = new JTextField(20);
 
         // Tạo các nút chức năng
-        JButton addButton = new JButton("Thêm Sinh Viên");
 
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
@@ -44,6 +36,16 @@ public class StudentManager {
 
        
 
+
+        
+        // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchStudent();
+            }
+        });
+
         // Cấu hình giao diện
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2, 10, 10));
@@ -53,7 +55,6 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
-        panel.add(addButton);
 
         // Thêm bảng vào cửa sổ
         JScrollPane scrollPane = new JScrollPane(studentTable);
@@ -98,6 +99,25 @@ public class StudentManager {
     
 
    
+
+
+   
+    private void searchStudent() {
+        String searchText = searchField.getText().toLowerCase();
+        if (searchText.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng nhập từ khoá tìm kiếm!");
+            return;
+        }
+
+        for (int i = 0; i < studentList.size(); i++) {
+            Student student = studentList.get(i);
+            if (student.getName().toLowerCase().contains(searchText) || 
+                student.getClassName().toLowerCase().contains(searchText)) {
+                    studentTable.setRowSelectionInterval(i, i); // Chọn dòng đầu tiên tìm được
+                break;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         new StudentManager();
