@@ -36,7 +36,7 @@ public class StudentManager {
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
 
-        
+        //cc
        
 
         // Cấu hình giao diện
