@@ -4,7 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+    public class StudentManager {
+    private JFrame frame;
+    private JTextField nameField, ageField, classField, searchField;
+    private JTable studentTable;
+    private ArrayList<Student> studentList;
+    private DefaultTableModel tableModel;
     public StudentManager() {
         studentList = new ArrayList<>();
         frame = new JFrame("Quản Lý Sinh Viên");
@@ -20,31 +25,13 @@ import java.util.ArrayList;
         searchField = new JTextField(20);
 
         // Tạo các nút chức năng
-
+        
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
 
-        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addStudent();
-            }
-        });
-
-       
-
-
         
-        // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchStudent();
-            }
-        });
 
         // Cấu hình giao diện
         JPanel panel = new JPanel();
@@ -68,56 +55,6 @@ import java.util.ArrayList;
         frame.setVisible(true);
     }
 
-    private void addStudent() {
-        String name = nameField.getText();
-        String ageStr = ageField.getText();
-        String className = classField.getText();
-
-        if (name.isEmpty() || ageStr.isEmpty() || className.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Vui lòng điền đầy đủ thông tin!");
-            return;
-        }
-
-        try {
-            int age = Integer.parseInt(ageStr);
-            Student student = new Student(name, age, className);
-            studentList.add(student);
-
-            // Cập nhật bảng
-            Object[] row = {student.getName(), student.getAge(), student.getClassName()};
-            tableModel.addRow(row);
-// Xóa dữ liệu trong các trường nhập
-            nameField.setText("");
-            ageField.setText("");
-            classField.setText("");
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Tuổi phải là một số hợp lệ!");
-        }
-    }
-
-    
-
-   
-
-
-   
-    private void searchStudent() {
-        String searchText = searchField.getText().toLowerCase();
-        if (searchText.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Vui lòng nhập từ khoá tìm kiếm!");
-            return;
-        }
-
-        for (int i = 0; i < studentList.size(); i++) {
-            Student student = studentList.get(i);
-            if (student.getName().toLowerCase().contains(searchText) || 
-                student.getClassName().toLowerCase().contains(searchText)) {
-                    studentTable.setRowSelectionInterval(i, i); // Chọn dòng đầu tiên tìm được
-                break;
-            }
-        }
-    }
 
     public static void main(String[] args) {
         new StudentManager();
