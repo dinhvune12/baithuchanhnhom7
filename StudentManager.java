@@ -38,7 +38,7 @@ public class StudentManager {
 
         //cc
        
-
+        //minh huy up code
         // Cấu hình giao diện
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2, 10, 10));
