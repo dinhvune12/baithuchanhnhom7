@@ -39,7 +39,7 @@ public class StudentManager {
 
 
  
-        JButton updateButton = new JButton("Sửa");
+        JButton updateButton = new JButton("again");
  
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
@@ -73,7 +73,7 @@ public class StudentManager {
         });
 
        
-
+        System.out.println("vu cap nhap");
         // Lắng nghe sự kiện khi nhấn nút "Sửa"
         updateButton.addActionListener(new ActionListener() {
             @Override
