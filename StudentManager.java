@@ -30,6 +30,8 @@ public class StudentManager {
 
         // Tạo các nút chức năng
 
+        JButton deleteButton = new JButton("Xoá");
+
         JButton searchButton = new JButton("Tìm kiếm");
 
         JButton addButton = new JButton("Thêm Sinh Viên");
@@ -38,6 +40,16 @@ public class StudentManager {
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
+
+     
+      
+        // Lắng nghe sự kiện khi nhấn nút "Xoá"
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteStudent();
+            }
+        });
 
         
         // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
@@ -72,6 +84,8 @@ public class StudentManager {
         panel.add(searchField);
         panel.add(searchButton);
 
+        panel.add(deleteButton);
+
         // Thêm bảng vào cửa sổ
         JScrollPane scrollPane = new JScrollPane(studentTable);
 
@@ -84,6 +98,17 @@ public class StudentManager {
         frame.setVisible(true);
     }
 
+    
+    private void deleteStudent() {
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn sinh viên để xóa!");
+            return;
+        }
+
+        studentList.remove(selectedRow);
+        tableModel.removeRow(selectedRow);
+    }
    
     private void searchStudent() {
         String searchText = searchField.getText().toLowerCase();
@@ -153,8 +178,7 @@ class Student {
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
+public void setName(String name) {
         this.name = name;
     }
 
@@ -173,4 +197,4 @@ class Student {
     public void setClassName(String className) {
         this.className = className;
     }
-}
+}//done
