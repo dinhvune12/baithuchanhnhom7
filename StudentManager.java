@@ -10,7 +10,7 @@ public class StudentManager {
     private JTable studentTable;
     private ArrayList<Student> studentList;
     private DefaultTableModel tableModel;
-
+//sua lan 2
     public StudentManager() {
         studentList = new ArrayList<>();
         frame = new JFrame("Quản Lý Sinh Viên");
