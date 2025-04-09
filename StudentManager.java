@@ -11,7 +11,7 @@ public class StudentManager {
     private JTable studentTable;
     private ArrayList<Student> studentList;
     private DefaultTableModel tableModel;
-
+//author minhhuy
     public StudentManager() {
         studentList = new ArrayList<>();
         frame = new JFrame("Quản Lý Sinh Viên");
