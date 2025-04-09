@@ -21,7 +21,7 @@ public class StudentManager {
         JLabel ageLabel = new JLabel("Tuổi:");
         JLabel classLabel = new JLabel("Lớp:");
 
-
+        //nhlee
         nameField = new JTextField(20);
         ageField = new JTextField(20);
         classField = new JTextField(20);
