@@ -27,6 +27,8 @@ public class StudentManager {
         searchField = new JTextField(20);
 
         // Tạo các nút chức năng
+
+        JButton deleteButton = new JButton("Xoá");
         JButton addButton = new JButton("Thêm Sinh Viên");
 
 
@@ -37,6 +39,16 @@ public class StudentManager {
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
+
+     
+      
+        // Lắng nghe sự kiện khi nhấn nút "Xoá"
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteStudent();
+            }
+        });
 
         // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
         addButton.addActionListener(new ActionListener() {
@@ -65,6 +77,9 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
+
+        panel.add(deleteButton);
+
         panel.add(addButton);
 
 
@@ -82,6 +97,17 @@ public class StudentManager {
         frame.setVisible(true);
     }
 
+    
+    private void deleteStudent() {
+        int selectedRow = studentTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng chọn sinh viên để xóa!");
+            return;
+        }
+
+        studentList.remove(selectedRow);
+        tableModel.removeRow(selectedRow);
+    }
     private void addStudent() {
     String name = nameField.getText();
     String ageStr = ageField.getText();
