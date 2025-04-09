@@ -4,13 +4,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 public class StudentManager {
     private JFrame frame;
     private JTextField nameField, ageField, classField, searchField;
     private JTable studentTable;
     private ArrayList<Student> studentList;
     private DefaultTableModel tableModel;
-//sua lan 2
+
     public StudentManager() {
         studentList = new ArrayList<>();
         frame = new JFrame("Quản Lý Sinh Viên");
@@ -21,29 +22,30 @@ public class StudentManager {
         JLabel classLabel = new JLabel("Lớp:");
         JLabel searchLabel = new JLabel("Tìm kiếm:");
 
-
         nameField = new JTextField(20);
         ageField = new JTextField(20);
         classField = new JTextField(20);
         searchField = new JTextField(20);
-        
 
-     // Tạo các nút chức năng
-
+        // Tạo các nút chức năng
+        JButton addButton = new JButton("Thêm Sinh Viên");
         JButton searchButton = new JButton("Tìm kiếm");
-
-      
-    
         JButton updateButton = new JButton("Sửa");
-       
 
-        
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
         tableModel = new DefaultTableModel(columnNames, 0);
         studentTable = new JTable(tableModel);
-        
-     // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
+
+        // Lắng nghe sự kiện khi nhấn nút "Thêm Sinh Viên"
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addStudent();
+            }
+        });
+
+        // Lắng nghe sự kiện khi nhấn nút "Tìm kiếm"
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,18 +53,14 @@ public class StudentManager {
             }
         });
 
-
-     // Lắng nghe sự kiện khi nhấn nút "Sửa"
+        // Lắng nghe sự kiện khi nhấn nút "Sửa"
         updateButton.addActionListener(new ActionListener() {
             @Override
-              public void actionPerformed(ActionEvent e) {
-                    updateStudent();
-                }
-            });
-       
+            public void actionPerformed(ActionEvent e) {
+                updateStudent();
+            }
+        });
 
-       
- 
         // Cấu hình giao diện
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(6, 2, 10, 10));
@@ -72,11 +70,10 @@ public class StudentManager {
         panel.add(ageField);
         panel.add(classLabel);
         panel.add(classField);
-     
+        panel.add(addButton);
         panel.add(searchLabel);
         panel.add(searchField);
         panel.add(searchButton);
-
         panel.add(updateButton);
 
         // Thêm bảng vào cửa sổ
@@ -89,6 +86,35 @@ public class StudentManager {
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    private void addStudent() {
+        String name = nameField.getText();
+        String ageStr = ageField.getText();
+        String className = classField.getText();
+
+        if (name.isEmpty() || ageStr.isEmpty() || className.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        try {
+            int age = Integer.parseInt(ageStr);
+            Student student = new Student(name, age, className);
+            studentList.add(student);
+
+            // Cập nhật bảng
+            Object[] row = {student.getName(), student.getAge(), student.getClassName()};
+            tableModel.addRow(row);
+
+            // Xóa dữ liệu trong các trường nhập
+            nameField.setText("");
+            ageField.setText("");
+            classField.setText("");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Tuổi phải là một số hợp lệ!");
+        }
     }
 
     private void searchStudent() {
@@ -108,9 +134,6 @@ public class StudentManager {
         }
     }
 
-
-
-
     private void updateStudent() {
         int selectedRow = studentTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -129,8 +152,10 @@ public class StudentManager {
 
         try {
             int age = Integer.parseInt(ageStr);
+
+            // Cập nhật thông tin sinh viên đã chọn
             Student student = studentList.get(selectedRow);
-	student.setName(name);
+            student.setName(name);
             student.setAge(age);
             student.setClassName(className);
 
@@ -149,8 +174,6 @@ public class StudentManager {
         }
     }
 
-
-    
     public static void main(String[] args) {
         new StudentManager();
     }
@@ -186,6 +209,7 @@ class Student {
     public String getClassName() {
         return className;
     }
+
     public void setClassName(String className) {
         this.className = className;
     }
