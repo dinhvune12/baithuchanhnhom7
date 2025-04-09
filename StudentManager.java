@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-//lan cuoi cua cua vu
 public class StudentManager {
     private JFrame frame;
     private JTextField nameField, ageField, classField, searchField;
@@ -29,7 +28,7 @@ public class StudentManager {
 
         // Tạo các nút chức năng
 
-        JButton searchButton = new JButton("Tìm kiếm");
+       
 
         // Tạo bảng để hiển thị danh sách sinh viên
         String[] columnNames = {"Tên", "Tuổi", "Lớp"};
@@ -62,7 +61,7 @@ public class StudentManager {
         frame.setVisible(true);
     }
 
-   //hihihihihihi
+
    
 
     public static void main(String[] args) {
@@ -100,7 +99,6 @@ class Student {
     public String getClassName() {
         return className;
     }
-//CCccc
     public void setClassName(String className) {
         this.className = className;
     }
